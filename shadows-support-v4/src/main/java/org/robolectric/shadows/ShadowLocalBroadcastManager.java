@@ -6,23 +6,24 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
+import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Implementation;
 import org.robolectric.annotation.Implements;
 import org.robolectric.shadows.util.MagicObject;
 import org.robolectric.util.ReflectionHelpers;
+import org.robolectric.util.ShadowExtractor;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static org.robolectric.Shadows.shadowOf;
 
 @Implements(LocalBroadcastManager.class)
 public class ShadowLocalBroadcastManager {
 
   final List<Intent> sentBroadcastIntents = new ArrayList<Intent>();
   final List<Wrapper> registeredReceivers = new ArrayList<Wrapper>();
+
   @Implementation
   public static LocalBroadcastManager getInstance(final Context context) {
     return shadowOf(context).getShadowApplication().getSingleton(LocalBroadcastManager.class, new Provider<LocalBroadcastManager>() {
@@ -31,6 +32,10 @@ public class ShadowLocalBroadcastManager {
         return ReflectionHelpers.callConstructorReflectively(LocalBroadcastManager.class, new ReflectionHelpers.ClassParameter(Context.class, context));
       }
     });
+  }
+
+  private static ShadowContext shadowOf(Context context) {
+    return (ShadowContext) ShadowExtractor.extract(context);
   }
 
   @Implementation
