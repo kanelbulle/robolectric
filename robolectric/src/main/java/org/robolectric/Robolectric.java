@@ -27,8 +27,10 @@ import org.robolectric.tester.org.apache.http.RequestMatcher;
 import org.robolectric.util.ActivityController;
 import org.robolectric.util.Scheduler;
 import org.robolectric.util.ServiceController;
+import org.robolectric.util.ShadowProvider;
 
 import java.util.List;
+import java.util.ServiceLoader;
 
 public class Robolectric {
 
@@ -337,12 +339,14 @@ public class Robolectric {
     return MagicObject.getResourceLoader();
   }
 
-  public static void reset(Config config) {
+  public static void reset() {
     RuntimeEnvironment.application = null;
     RuntimeEnvironment.packageManager = null;
     RuntimeEnvironment.activityThread = null;
 
-    Shadows.reset();
+    for (ShadowProvider provider : ServiceLoader.load(ShadowProvider.class)) {
+      provider.reset();
+    }
   }
 
   public static <T extends Service> ServiceController<T> buildService(Class<T> serviceClass) {

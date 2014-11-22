@@ -29,10 +29,5 @@ set -e
 cd robolectric-shadows
 mvn clean velocity:velocity javadoc:javadoc source:jar install -Pandroid-19  -DskipTests
 )
-(
-set -e
-cd shadows-support-v4
-mvn clean javadoc:javadoc source:jar install
-)
 
 mvn javadoc:javadoc source:jar install
