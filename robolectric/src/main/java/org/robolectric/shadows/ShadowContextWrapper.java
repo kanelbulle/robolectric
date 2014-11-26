@@ -369,4 +369,9 @@ public class ShadowContextWrapper extends ShadowContext {
   public SQLiteDatabase openOrCreateDatabase(String name, int mode, CursorFactory factory, DatabaseErrorHandler databaseErrorHandler) {
     return super.openOrCreateDatabase(name, mode, factory, databaseErrorHandler);
   }
+
+  @Implementation
+  public boolean deleteDatabase(String name) {
+    return super.deleteDatabase(name);
+  }
 }

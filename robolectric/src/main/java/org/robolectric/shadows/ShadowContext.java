@@ -133,6 +133,12 @@ abstract public class ShadowContext {
   }
 
   @Implementation
+  public boolean deleteDatabase(String name) {
+    File dbFile = getDatabasePath(name);
+    SQLiteDatabase.deleteDatabase(dbFile);
+  }
+
+  @Implementation
   public boolean deleteFile(String name) {
     return getFileStreamPath(name).delete();
   }
