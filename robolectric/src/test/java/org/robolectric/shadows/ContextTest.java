@@ -371,4 +371,18 @@ public class ContextTest {
     assertThat(typedArray.getString(0)).isEqualTo("^q");
     assertThat(typedArray.getInt(1, -1234)).isEqualTo(1 /* ungulate */);
   }
+
+  @Test
+  public void deleteDatabase_deletesDatabaseIfExists() throws IOException {
+    File dbFile = context.getDatabasePath("testdb");
+    dbFile.createNewFile();
+
+    assertThat(context.deleteDatabase("testdb")).isTrue();
+    assertThat(dbFile.exists()).isFalse();
+  }
+
+  @Test
+  public void deleteDatabase_shouldReturnFalseIfDbNotDeleted() {
+    assertThat(context.deleteDatabase("somedb")).isFalse();
+  }
 }
