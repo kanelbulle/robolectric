@@ -1,6 +1,7 @@
 package org.robolectric.fakes;
 
 import android.graphics.drawable.Drawable;
+import android.view.ActionProvider;
 import android.view.View;
 import org.junit.Before;
 import org.junit.Test;
@@ -161,6 +162,12 @@ public class RoboMenuItemTest {
   @Test
   public void setOnActionExpandListener_shouldReturnMenuItem() throws Exception {
     assertThat(item.setOnActionExpandListener(listener)).isSameAs(item);
+  }
+
+  @Test
+  public void setActionProvider_shouldReturnActionProvider {
+    ActionProvider actionProvider = new ActionProvider(RuntimeEnvironment.application);
+    assertThat(item.setActionProvider(actionProvider).getActionProvider()).isEqualTo(actionProvider);
   }
 
   class TestOnActionExpandListener implements MenuItem.OnActionExpandListener {

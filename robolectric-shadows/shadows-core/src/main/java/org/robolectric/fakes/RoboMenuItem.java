@@ -25,6 +25,7 @@ public class RoboMenuItem implements MenuItem {
   private View actionView;
   private OnActionExpandListener actionExpandListener;
   private int order;
+  private ActionProvider actionProvider;
 
   public RoboMenuItem() {
   }
@@ -243,12 +244,13 @@ public class RoboMenuItem implements MenuItem {
 
   @Override
   public MenuItem setActionProvider(ActionProvider actionProvider) {
+    this.actionProvider = actionProvider;
     return this;
   }
 
   @Override
   public ActionProvider getActionProvider() {
-    return null;
+    return actionProvider;
   }
 
   @Override
